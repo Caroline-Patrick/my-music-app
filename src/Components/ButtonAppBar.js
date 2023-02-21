@@ -1,4 +1,6 @@
-import * as React from 'react';
+import React,{ useState, useContext, createContext } from 'react';
+import { LoginContext } from '../App';
+import LogIn from './LogIn';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,7 +10,14 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
 export default function ButtonAppBar() {
-  return (
+  const [loggedIn, setLoggedIn] = useState(true);
+
+  const handleClick = (e) => {
+      e.preventDefault();
+      setLoggedIn(!LogIn);
+  };
+
+  return (<div>
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
@@ -24,28 +33,18 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             News
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button onClick={LogIn} color="inherit">
+            {<LoginContext.Provider value={{ loggedIn, setLoggedIn }}>
+              {loggedIn ? (
+                "Log In"
+              ) : (
+                "Log Out"
+              )}
+            </LoginContext.Provider>}
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
+    </div>
   );
 }
-
-// import React from 'react'
-
-// export default function ResponsiveAppBar() {
-//   return (
-//     <div>ResponsiveAppBar</div>
-//   )
-// }
-
-
-// import React, { Component } from 'react'
-
-// export default class ResponsiveAppBar extends Component {
-//   render() {
-//     return (
-//       <div>ResponsiveAppBar</div>
-//     )
-//   }
-// }

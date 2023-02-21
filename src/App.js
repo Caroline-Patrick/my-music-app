@@ -1,13 +1,27 @@
+import React, { useState, createContext } from 'react';
 import ButtonAppBar from './Components/ButtonAppBar';
 import Dashboard from './Components/Dashboard';
-import Login from './Components/LogIn'
+import LogIn from './Components/LogIn';
+import './App.css';
+
+export const LoginContext = createContext({
+  loggedIn: false,
+  setLoggedIn: () => {},
+});
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(true);
+
   return (
     <div className="App">
       <ButtonAppBar />
-      <Dashboard />
-      <Login />
+      <LoginContext.Provider value={{ loggedIn, setLoggedIn }}>
+        {loggedIn ? (
+          <LogIn />
+        ) : (
+          <Dashboard />
+        )}
+      </LoginContext.Provider>
     </div>
   );
 }
